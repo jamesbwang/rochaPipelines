@@ -1,0 +1,6 @@
+data/
+*.bigwig
+*.bed
+*.beddb
+*.sizes
+*.bedpd
