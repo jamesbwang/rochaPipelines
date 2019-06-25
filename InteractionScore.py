@@ -39,11 +39,10 @@ targetedInteractionCount = 0
 doubleInteractionCount = 0
 for interaction in dataTable.itertuples():
     for bound in boundsTable.itertuples():
-        if (range_intersect((interaction[2], interaction[2]+51), (bound[1], bound[2])) and interaction[1] == "chr8") or (range_intersect((interaction[4], interaction[4]+51), (bound[1], bound[2])) and interaction[3] == "chr8"):
-            if (range_intersect((interaction[2], interaction[2]+51), (bound[1], bound[2])) and interaction[1] == "chr8") and (range_intersect((interaction[4], interaction[4]+51), (bound[1], bound[2])) and interaction[3] == "chr8"):
-                doubleInteractionCount += 1
+        if (range_intersect((interaction[2], interaction[2]+51), (bound[1], bound[2])) and interaction[1] == "chr8"):
             targetedInteractionCount += 1
-            break
+        if (range_intersect((interaction[4], interaction[4]+51), (bound[1], bound[2])) and interaction[3] == "chr8"):
+            targetedInteractionCount += 1
 with open(aux, "a") as f:
         f.write("Number of targeted interactions: " + str(targetedInteractionCount) + "\n")
         f.write("Number of double interactions: " + str(doubleInteractionCount) + "\n")
