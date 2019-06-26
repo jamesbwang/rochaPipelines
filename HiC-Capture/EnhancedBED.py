@@ -11,46 +11,46 @@ path = "data/territory.bed"
 
 # In[2]:
 
-
+import sys
 import pandas as pd
+
+interPickle = sys.argv[1]
+oligoPickle = sys.argv[2]
+path = sys.argv[3]
+
+
+# read pickles to save computation time
 interactions = pd.read_pickle(interPickle)
 bounds = pd.read_pickle(oligoPickle)
-
-
-# In[3]:
-
-
-i = 0
-territoryInteractions = {}
-for territory in bounds.itertuples():
-    territoryInteractions[i] = interactions.query("(X1 == 'chr8' & X2 <= @territory[2] & (X2 + 51) >= @territory[1]) | (X5 == 'chr8' & X6 <= @territory[2] & (X6 + 51) >= @territory[1])")
-    i += 1
-
 
 # In[4]:
 
 
-import numpy as np
-for i in territoryInteractions:
+## separate interactor/interactee pairs and filter out territory regions. 
+## subsequent concatenation and generation of ends from "start" of oligos yields easy conversion to .bed files
+territoryInteractions = []
+for i in range(bounds.shape[0]):
     territory = bounds.iloc[i]
-    df1 = territoryInteractions[i].iloc[:,:2]
-    df2 = territoryInteractions[i].iloc[:,2:]
-    df1 = df1.loc[(df1["X1"] != "chr8") | (df1["X2"] > territory[1]) | (df1["X2"]+51 < territory[0])]
-    df2 = df2.loc[(df2["X5"] != "chr8") | (df2["X6"] > territory[1]) | (df2["X6"]+51 < territory[0])]
+    t1 = territory[0]
+    t2 = territory[1]
+    i = territory.index
+    df = interactions[((interactions["X1"] == 'chr8') & (interactions["X2"] <= t2) & (t1 <= (interactions["X2"] + 51))) | ((interactions["X5"] == 'chr8') & (interactions["X6"] <= t2) & (t1<=(interactions["X6"] + 51)))]
+    #separation
+    df1 = df.iloc[:,:2]
+    df2 = df.iloc[:,2:]
+    #filtering
     df2.columns = ['X1', 'X2']
-    territoryInteractions[i] = pd.concat([df1, df2], sort=False)
-    territoryInteractions[i]["end"] = territoryInteractions[i]["X2"] + 51
-
+    df1 = df1[(df1["X1"] != "chr8") | (df1["X2"] > t2) | (df1["X2"]+51 < t1)]
+    df2 = df2[(df2["X1"] != "chr8") | (df2["X2"] > t2) | (df2["X2"]+51 < t1)]
+    #concatenation
+    df = pd.concat([df1, df2], sort=False)
+    #end generation
+    df["X2"] = (df["X2"]/5).round(decimals=-3)*5
+    df["end"] = df["X2"] + 5000
+    territoryInteractions.append(df)
 
 # In[5]:
 
-
-for i in territoryInteractions:
+#generation of bed files
+for i in range(len(territoryInteractions)):
     territoryInteractions[i].to_csv(path_or_buf=path[:-4] + "_" + str(i) + "_" + path[-4:], sep='\t', na_rep='', float_format="%.f", columns=None, header=False, index=False, index_label=None, mode='w', encoding=None, compression='infer', quoting=None, quotechar='"', line_terminator=None, chunksize=None, tupleize_cols=None, date_format=None, doublequote=True, escapechar=None, decimal='.')
-
-
-# In[ ]:
-
-
-
-
