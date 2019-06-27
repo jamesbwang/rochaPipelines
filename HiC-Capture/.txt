@@ -1,4 +1,0 @@
-Number of total read interactions: 10313005
-Number of targeted interactions: 29387
-Number of double interactions: 0
-Normalized targeted interactions: 0.002849508945258923
