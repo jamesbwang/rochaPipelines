@@ -35,7 +35,8 @@ else:
     #interaction Counts: read from the existing file
     interactionCount = -1
     with open(aux, "r") as f:
-         interactionCount = int(f.read()[34:s.find("\n")])
+         s = f.read()
+         interactionCount = int(s[34:s.find("\n")])
     
     #read space-negligible DataFrame
     oligoTable = pd.read_csv(oligos, sep="\t", header=None, usecols=[0,1,2,3])
@@ -46,13 +47,14 @@ else:
 ## construct the boundaries for further filtering
 boundsTable = pd.DataFrame({"lowerBound":[], "upperBound":[]})
 prevValue = -1
+
 for oligo in oligoTable.itertuples():
     if oligo[0] %2 == 0:
         prevValue = oligo[3]
     else:
         boundsTable = pd.concat([boundsTable, pd.DataFrame({"lowerBound":[int(prevValue)], "upperBound":[int(oligo[4])]})])
-# pickle to save computation later
-boundsTable.to_pickle(oligos[:-4] + ".pkl", compression='infer', protocol=4)
+#pickle to save computation later
+boundsTable.to_pickle(oligos + ".pkl", compression='infer', protocol=4)
 del oligoTable
 
 ## count interactions for targeted interaction
@@ -66,8 +68,8 @@ for interaction in dataTable.itertuples():
         if (range_intersect((interaction[2], interaction[2]+51), (bound[1], bound[2])) and interaction[1] == "chr8"):
             targetedInteractionCount += 1
         if (range_intersect((interaction[4], interaction[4]+51), (bound[1], bound[2])) and interaction[3] == "chr8"):
-            targetedInteractionCount += 1
-## write results to file
+            targetedInteractionCount += 1 
+# write results to file
 with open(aux, "a") as f:
         f.write("Number of targeted interactions: " + str(targetedInteractionCount) + "\n")
         f.write("Number of double interactions: " + str(doubleInteractionCount) + "\n")
