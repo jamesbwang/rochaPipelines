@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 # bash to run full pipeline to turn interactions text file into filtered viewpoints for each territory
 
 TERRITORYFILE=$1

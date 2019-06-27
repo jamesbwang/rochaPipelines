@@ -1,5 +1,33 @@
 # rochaPipelines
-Backup repository for Lab Rocha's Pipelienes, will make public once relevant data is removed and such
+Backup repository for Lab Rocha's Pipelines, will make public once relevant data is removed and such
+
+## Pipelines:
+## Capture Hi-C
+Enriches paired-end sequencing data for gene regions given Capture-HiC oligonucleotide territories and chromosome sizes files.
+
+### Requirements:
+[Python3](https://www.python.org)
+[bedTools](https://bedtools.readthedocs.io/en/latest/)
+
+### Usage:
+```
+./HiC-Pipeline_SingleJob oligos.tsv interactions.txt chromosomes.sizes
+```
+All associated .bed, .txt, and .bedgraph outputs will be written to the same directory as '''interactions.txt'''
+
+For multiple jobs on the same genomic regions, use the bash command for multiple jobs i.e.
+'''
+./HiC-Pipeline_MultiJob oligos.tsv chromosomes.sizes
+'''
+
+Given that all '''interactions.txt''' files are in the same working directory as '''oligos.tsv''', multiple jobs will be created and run in parallel. Note that this script is only compatible with the NIH Biowulf cluster.
+
+### Future improvements:
+1. create flags specifying bin size
+2. implement more time-efficient methods for calculating data quality
+3. data quality visualization
+4. alphanumeric sorting/compatibility with [HiGlass](https://higlass.io) visualization 
+
 
 ## current scripts:
 ### 1. script to reverse non-TAD boundaries to TAD boundaries
