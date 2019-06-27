@@ -13,14 +13,14 @@ Enriches paired-end sequencing data for gene regions given Capture-HiC oligonucl
 ```
 ./HiC-Pipeline_SingleJob oligos.tsv interactions.txt chromosomes.sizes
 ```
-All associated .bed, .txt, and .bedgraph outputs will be written to the same directory as '''interactions.txt'''
+All associated .bed, .txt, and .bedgraph outputs will be written to the same directory as ```interactions.txt```
 
 For multiple jobs on the same genomic regions, use the bash command for multiple jobs i.e.
-'''
+```
 ./HiC-Pipeline_MultiJob oligos.tsv chromosomes.sizes
-'''
+```
 
-Given that all '''interactions.txt''' files are in the same working directory as '''oligos.tsv''', multiple jobs will be created and run in parallel. Note that this script is only compatible with the NIH Biowulf cluster.
+Given that all ```interactions.txt``` files are in the same working directory as ```oligos.tsv```, multiple jobs will be created and run in parallel. Note that this script is only compatible with the NIH Biowulf cluster.
 
 ### Future improvements:
 1. create flags specifying bin size
