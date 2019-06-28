@@ -11,7 +11,7 @@ echo Running quality analysis on $INTERACTIONSFILE. This will take some time.
 python3 InteractionScore.py $TERRITORYFILE $INTERACTIONSFILE $PICKLEFILE $READER_OUTPUT
 
 echo Generating viewpoints .bed files for $INTERACTIONSFILE.
-python3 EnhancedBed.py $PICKLEFILE "$TERRITORYFILE.pkl" "$INTERACTIONSFILE..bed"
+python3 EnhancedBed.py $PICKLEFILE "$TERRITORYFILE.pkl" "$INTERACTIONSFILE..bed" $READER_OUTPUT
 
 for i in $INTERACTIONSFILE*.bed; do
 	[ -f "$i" ] || break

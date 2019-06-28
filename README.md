@@ -53,5 +53,5 @@ python3 InteractionScore.py oligoFile.tsv readData.tsv pklPath.pkl fileToWriteTo
 
 Run script #3 for .pkl generation. Mirrors notebook of same name in the folder. Use for visualization in iGV, run script #5 for visualization in both iGV and HiGlass. Usage is as follows:
 ```
-python3 EnhancedBed.py pickled_interactions.pkl oligo_interactions.pkl 
+python3 EnhancedBed.py pickled_interactions.pkl oligo_interactions.pkl fileToWriteTo.txt
 ```
