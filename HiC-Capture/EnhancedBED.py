@@ -11,6 +11,7 @@ oligoPickle = sys.argv[2]
 path = sys.argv[3]
 reader_output = sys.argv[4]
 chrom = str(sys.argv[5])
+binSize = int(sys.argv[6])
 
 with open(reader_output, "r") as f:
     fullTotal = int(f.read()[34:])
@@ -43,8 +44,8 @@ for i in range(bounds.shape[0]):
     df = pd.concat([df1, df2], sort=False)
     total += df.shape[0]
     #end generation
-    df["X2"] = (df["X2"]/5).round(decimals=-3)*5
-    df["end"] = df["X2"] + 5000
+    df["X2"] = int(df["X2"]/binSize)*binSize
+    df["end"] = df["X2"] + binSize
     territoryInteractions.append(df)
 with open(reader_output, "a") as f:
     f.write("Enriched Target Interactions: " + str(total))
