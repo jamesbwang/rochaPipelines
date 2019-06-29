@@ -24,7 +24,7 @@ For multiple jobs on the same genomic regions, use the bash command for multiple
 Given that all ```interactions.txt``` files are in the same working directory as ```oligos.tsv```, multiple jobs will be created and run in parallel. Note that this script is only compatible with the NIH Biowulf cluster.
 
 ### Future improvements:
-- [ ] create flags specifying bin size
+- [x] create flags specifying bin size
 - [x] implement more time-efficient methods for calculating data quality
 - [ ] data quality visualization
 - [ ] alphanumeric sorting/compatibility with [HiGlass](https://higlass.io) visualization 
