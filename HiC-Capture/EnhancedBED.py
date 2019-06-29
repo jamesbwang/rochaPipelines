@@ -5,6 +5,7 @@
 
 import sys
 import pandas as pd
+import math
 
 interPickle = sys.argv[1]
 oligoPickle = sys.argv[2]
@@ -15,7 +16,8 @@ binSize = int(sys.argv[6])
 
 with open(reader_output, "r") as f:
     fullTotal = int(f.read()[34:])
-    
+oMagnitude = int(math.log10(fullTotal))
+firstDigit = fullTotal/(10**oMagnitude)    
 # read pickles to save computation time
 interactions = pd.read_pickle(interPickle)
 bounds = pd.read_pickle(oligoPickle)
@@ -44,7 +46,7 @@ for i in range(bounds.shape[0]):
     df = pd.concat([df1, df2], sort=False)
     total += df.shape[0]
     #end generation
-    df["X2"] = int(df["X2"]/binSize)*binSize
+    df["X2"] = (df["X2"]/firstDigit).round(decimals=-1*oMagnitude)*firstDigit
     df["end"] = df["X2"] + binSize
     territoryInteractions.append(df)
 with open(reader_output, "a") as f:
