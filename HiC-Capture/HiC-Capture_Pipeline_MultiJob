@@ -1,0 +1,27 @@
+#!/bin/bash
+module load bedtools
+
+OLIGO_NAMES=$1
+GENOME=$2
+CHROM=$3
+BINSIZE=$4
+
+WORKINGDIRECTORY="$(dirname "$OLIGO_NAMES")"
+ls $WORKINGDIRECTORY/*.txt > experiment_names.txt
+counter=0
+while read -r line
+do
+  printf "%s\t %s\t%s\n" $line $OLIGO_NAMES $GENOME $CHROM
+  let counter=$counter+1
+done < "experiment_names.txt"
+
+interactions=$(awk "NR==${SLURM_ARRAY_TASK_ID} {print \$1}" experiment_names.txt)
+oligo=$(awk "NR==${SLURM_ARRAY_TASK_ID} {print \$2}" experiment_names.txt)
+genome=$(awk "NR==${SLURM_ARRAY_TASK_ID} {print \$3}" experiment_names.txt)
+chrom=$(awk "NR==${SLURM_ARRAY_TASK_ID} {print \$4}" experiment_names.txt)
+binsize=$(awk "NR==${SLURM_ARRAY_TASK_ID} {print \$5}" experiment_names.txt)
+
+
+
+./HiC-Capture_Pipeline_SingleJob $oligo $interactions $genome $chrom $binsize
+rm experiment_names.txt
