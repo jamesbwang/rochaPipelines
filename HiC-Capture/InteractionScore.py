@@ -6,6 +6,7 @@ oligos = sys.argv[1]
 data = sys.argv[2]
 pickle = sys.argv[3]
 aux = sys.argv[4]
+chrom = str(sys.argv[5])
 
 from os import path
 import pandas as pd
@@ -28,7 +29,7 @@ if not path.exists(pickle) or not path.exists(aux):
         f.write("Number of total read interactions: " + str(interactionCount) + "\n")
  
    #initial filter applied and instantly saved to .pkl file to save overhead later on
-    dataTable.query("X1 == 'chr8' | X5 == 'chr8'", inplace=True)
+    dataTable.query("X1 == @chrom | X5 == @chrom", inplace=True)
     dataTable.to_pickle(pickle, compression='infer', protocol=4)
 
 else:
@@ -62,15 +63,15 @@ targetedInteractionCount = 0
 doubleInteractionCount = 0
 # implementation: brute force, but since territories=4, not too much of a big deal. 
 # TODO: implement binary search over these ranges if territory numbers grow to be too big
-for interaction in dataTable.itertuples():
-    for bound in boundsTable.itertuples():
-        # checks both interactor and interactee for fulfillment of criteria
-        if (range_intersect((interaction[2], interaction[2]+51), (bound[1], bound[2])) and interaction[1] == "chr8"):
-            targetedInteractionCount += 1
-        if (range_intersect((interaction[4], interaction[4]+51), (bound[1], bound[2])) and interaction[3] == "chr8"):
-            targetedInteractionCount += 1 
+#for interaction in dataTable.itertuples():
+#    for bound in boundsTable.itertuples():
+#        # checks both interactor and interactee for fulfillment of criteria
+#        if (range_intersect((interaction[2], interaction[2]+51), (bound[1], bound[2])) and interaction[1] == "chr8"):
+#            targetedInteractionCount += 1
+#        if (range_intersect((interaction[4], interaction[4]+51), (bound[1], bound[2])) and interaction[3] == "chr8"):
+#            targetedInteractionCount += 1 
 # write results to file
-with open(aux, "a") as f:
-        f.write("Number of targeted interactions: " + str(targetedInteractionCount) + "\n")
-        f.write("Number of double interactions: " + str(doubleInteractionCount) + "\n")
-        f.write("Normalized targeted interactions: " + str(targetedInteractionCount/interactionCount) + "\n")
+#with open(aux, "a") as f:
+#        f.write("Number of targeted interactions: " + str(targetedInteractionCount) + "\n")
+#        f.write("Number of double interactions: " + str(doubleInteractionCount) + "\n")
+#        f.write("Normalized targeted interactions: " + str(targetedInteractionCount/interactionCount) + "\n")

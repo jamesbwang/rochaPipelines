@@ -10,6 +10,7 @@ interPickle = sys.argv[1]
 oligoPickle = sys.argv[2]
 path = sys.argv[3]
 reader_output = sys.argv[4]
+chrom = str(sys.argv[5])
 
 with open(reader_output, "r") as f:
     fullTotal = int(f.read()[34:])
@@ -30,14 +31,14 @@ for i in range(bounds.shape[0]):
     t1 = territory[0]
     t2 = territory[1]
     i = territory.index
-    df = interactions[((interactions["X1"] == 'chr8') & (interactions["X2"] <= t2) & (t1 <= (interactions["X2"] + 51))) | ((interactions["X5"] == 'chr8') & (interactions["X6"] <= t2) & (t1<=(interactions["X6"] + 51)))]
+    df = interactions[((interactions["X1"] == chrom) & (interactions["X2"] <= t2) & (t1 <= (interactions["X2"] + 51))) | ((interactions["X5"] == chrom) & (interactions["X6"] <= t2) & (t1<=(interactions["X6"] + 51)))]
     #separation
     df1 = df.iloc[:,:2]
     df2 = df.iloc[:,2:]
     #filtering
     df2.columns = ['X1', 'X2']
-    df1 = df1[(df1["X1"] != "chr8") | (df1["X2"] > t2) | (df1["X2"]+51 < t1)]
-    df2 = df2[(df2["X1"] != "chr8") | (df2["X2"] > t2) | (df2["X2"]+51 < t1)]
+    df1 = df1[(df1["X1"] != chrom) | (df1["X2"] > t2) | (df1["X2"]+51 < t1)]
+    df2 = df2[(df2["X1"] != chrom) | (df2["X2"] > t2) | (df2["X2"]+51 < t1)]
     #concatenation
     df = pd.concat([df1, df2], sort=False)
     total += df.shape[0]

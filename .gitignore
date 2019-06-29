@@ -1,6 +1,8 @@
 data/
+TADCalling/
 *.bigwig
 *.bed
 *.beddb
 *.sizes
 *.bedpd
+*.jar
