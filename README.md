@@ -41,7 +41,7 @@ python3 boundsToTADS.py boundsFile.tsv chromSizes.sizes
 ### 2. script to convert .bed files to .bedpd files
 Named BedToBedpd.py, this script converts bed files to bedpd files for TAD annotation in [HiGlass](https://higlass.io). NOTE: because of poor documentation, Broad's iGV and HiGlass treat .bedpd files differenly. visualizing these .bed files in iGV will not work. Usage is as follows:
 ```
-python3 BedToBedpd.py bedfile.bed
+python3 BedToBedpe.py bedfile.bed
 ```
 
 ### 3. script to (somewhat) efficiently calculate the fraction of targeted sequences in Capture-HiC protocols.
