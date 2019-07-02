@@ -1,8 +1,11 @@
 data/
-TADCalling/
+temp/
+bin/
+random/
 *.bigwig
 *.bed
 *.beddb
 *.sizes
 *.bedpd
 *.jar
+*.CaTCH
