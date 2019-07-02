@@ -8,8 +8,11 @@ Given a .hic file generated from HiC-Pro or Juicer, call TAD (Topologically Asso
 
 ### Requirements:
 [Python3](https://www.python.org)
+
 [bedTools](https://bedtools.readthedocs.io/en/latest/)
+
 [Juicer Tools](https://github.com/aidenlab/juicer/wiki/Download)
+
 [CaTCH](https://github.com/zhanyinx/CaTCH_R)
 
 Extract the Juicer Tools .jar file to the root package directory.
