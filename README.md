@@ -2,6 +2,30 @@
 Backup repository for Lab Rocha's Pipelines, will make public once relevant data is removed and such
 
 ## Pipelines:
+
+## TADCalling_CaTCH
+Given a .hic file generated from HiC-Pro or Juicer, call TAD (Topologically Associated Domains) using the Giorgetti Lab's Reciprocal Insulation Score Algorithm (CaTCH)
+
+### Requirements:
+[Python3](https://www.python.org)
+[bedTools](https://bedtools.readthedocs.io/en/latest/)
+[Juicer Tools](https://github.com/aidenlab/juicer/wiki/Download)
+[CaTCH](https://github.com/zhanyinx/CaTCH_R)
+
+Extract the Juicer Tools .jar file to the root package directory.
+
+### Usage:
+the CaTCH Pipeline calls TADs on whole genomes. These take the form of a .bedpe file. Generate TAD Calling on the genomes by the folowing command:
+
+```
+./Construct_TADs_From_hic hicFile.hic chrom.sizes nChromosomes binSize
+```
+
+### Future improvements:
+- [ ] create flags specifying type of visualization software (HiGlass or Juicebox)
+- [ ] implement performance improvements in converting insulations to .bed files
+- [ ] data quality visualization
+
 ## Capture Hi-C
 Enriches paired-end sequencing data for gene regions given Capture-HiC oligonucleotide territories and chromosome sizes files.
 
