@@ -7,6 +7,7 @@ Enriches paired-end sequencing data for gene regions given Capture-HiC oligonucl
 
 ### Requirements:
 [Python3](https://www.python.org)
+
 [bedTools](https://bedtools.readthedocs.io/en/latest/)
 
 ### Usage:
