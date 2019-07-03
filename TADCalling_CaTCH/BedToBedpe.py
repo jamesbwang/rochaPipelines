@@ -10,4 +10,4 @@ returnData["chr2"] = bed["chromosome"]
 returnData["start2"] = bed["start"]
 returnData["end2"] = bed["end"]
 
-returnData.to_csv(fileName[:-4] + ".bedpe", sep='\t', na_rep='', float_format='%.f', columns=None, header=False, index=False, index_label=None, mode='w', encoding="ascii", compression='infer', quoting=None, quotechar='"', line_terminator=None, chunksize=None, tupleize_cols=None, date_format=None, doublequote=True, escapechar=None, decimal='.')
+returnData.to_csv(fileName[:-4] + ".bedpe", sep='\t', na_rep='', float_format='%.f', columns=None, header=False, index=False, index_label=None, mode='w', encoding="ascii")
