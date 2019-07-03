@@ -28,6 +28,7 @@ the CaTCH Pipeline calls TADs on whole genomes. These take the form of a .bedpe 
 - [ ] create flags specifying type of visualization software (HiGlass or Juicebox)
 - [ ] implement performance improvements in converting insulations to .bed files
 - [ ] data quality visualization
+- [ ] implement parallelization both at the batch job and chromosomal level
 
 ## Capture Hi-C
 Enriches paired-end sequencing data for gene regions given Capture-HiC oligonucleotide territories and chromosome sizes files.
