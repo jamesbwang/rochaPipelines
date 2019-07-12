@@ -1,7 +1,36 @@
-# rochaPipelines
+# Hi-C Pipelines
 Backup repository for Lab Rocha's Pipelines, will make public once relevant data is removed and such
 
 ## Pipelines:
+
+## cworld-pipelines
+Implementation to convert sparse matrix format to [.my5C file](http://my5c.umassmed.edu/welcome/welcome.php) and to pass it in for the Dekker Lab's implementation of TAD (Topologically Associated Domains) calling
+
+### Requirements:
+[Python2](https://www.python.org)
+
+[bedTools](https://bedtools.readthedocs.io/en/latest/)
+
+[R](https://www.r-project.org/)
+
+[perl](https://www.perl.org/)
+
+Build Job Dekker's [dekker-cworld repository](https://github.com/dekkerlab/cworld-dekker.git) and edit the path in ```matrix2my5C``` to the path of the ```matrix2insulations.pl``` script (will push this script to repository for compatibility)
+
+### Usage:
+Like the CaTCH Pipeline, cworld-pipelines calls TADs on entire genomes. Generate TADs with the following command:
+
+```
+./matrix2my5C matrixDirectory/ sizeFile.sizes absbed.bed binSize
+```
+
+matrixDirectory contains the .matrix files output by the CaTCH pipeline. absbed.bed outputs the .abs.bed files output by the CaTCH pipeline as well.
+
+### Future improvements
+
+- [ ] Support for more scripts than just TAD calling/insulation score calculation
+- [ ] Speed improvements in matrixTomy5C.py, especially in construction of dense matrix format
+- [ ] integration with CaTCH pipeline for a single command efficient and streamlined pipeline
 
 ## TADCalling_CaTCH
 Given a .hic file generated from HiC-Pro or Juicer, call TAD (Topologically Associated Domains) using the Giorgetti Lab's Reciprocal Insulation Score Algorithm (CaTCH)
