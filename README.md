@@ -31,6 +31,7 @@ matrixDirectory contains the .matrix files output by the CaTCH pipeline. absbed.
 - [ ] Support for more scripts than just TAD calling/insulation score calculation
 - [ ] Speed improvements in matrixTomy5C.py, especially in construction of dense matrix format
 - [ ] integration with CaTCH pipeline for a single command efficient and streamlined pipeline
+- [ ] integration with Juicer Tools for a standalone pipeline from .hic to insulation scores
 
 ## TADCalling_CaTCH
 Given a .hic file generated from HiC-Pro or Juicer, call TAD (Topologically Associated Domains) using the Giorgetti Lab's Reciprocal Insulation Score Algorithm (CaTCH)
