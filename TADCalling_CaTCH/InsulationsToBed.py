@@ -4,12 +4,12 @@
 # In[1]:
 
 
-import pandas as pd
 import sys
+import pandas as pd
 path = sys.argv[1]
 sizes = sys.argv[2]
 binSize= int(sys.argv[3])
-
+upperBound = float(sys.argv[4])
 
 # In[2]:
 
@@ -21,7 +21,7 @@ sizes = pd.read_csv(sizes, sep="\t", names=["chr", "size"])
 # In[3]:
 
 
-insulations = insulations[insulations["RI"] >=.700]
+insulations = insulations[(insulations["RI"] >=.700) & (insulations["RI"] <= upperBound)]
 
 
 # In[4]:

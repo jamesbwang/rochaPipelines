@@ -1,7 +1,8 @@
 #!/bin/bash
 
 interBed=$1
-for filename in ./temp/*.matrix; do
+fileName=$2
+for filename in $fileName"_temp"/*.matrix; do
    echo Now Remapping $filename ...
    python3 RemapRawMatrices.py $interBed $filename 
 done

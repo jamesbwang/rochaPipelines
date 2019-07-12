@@ -1,0 +1,5 @@
+./TADQualityAnalysis data/inter_1.hic data/results/
+./TADQualityAnalysis data/inter_2.hic data/results/
+./TADQualityAnalysis data/inter_3.hic data/results/
+./TADQualityAnalysis data/inter_4.hic data/results/
+./TADQualityAnalysis data/inter_5.hic data/results/

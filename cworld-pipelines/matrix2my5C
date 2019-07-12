@@ -1,0 +1,15 @@
+matrixDirectory=$1
+sizes=$2
+absFile=$3
+binName=$4
+
+for filename in $matrixDirectory/*.matrix; do
+	echo converting $filename to .my5C ....
+	python3 matrix2my5C.py $filename $sizes $absFile $binName
+done
+
+
+for filename in $matrixDirectory/*.my5c; do
+        echo calculating insulation for $filename ....
+	perl /data/GSRunit/James/conda-env/cworld-dekker/scripts/perl/matrix2insulation.pl -i $filename
+done

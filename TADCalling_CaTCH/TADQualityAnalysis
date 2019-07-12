@@ -1,0 +1,7 @@
+hicfile=$1
+strengthsFile=$hicfile"_CaTCH"/allClusters.clusters
+bedfile=$hicfile".sorted.bedpe"
+finalPath=$2
+
+python3 TADSizeReview.py $bedfile $finalPath
+python3 TADStrengthReview.py $strengthsFile $finalPath

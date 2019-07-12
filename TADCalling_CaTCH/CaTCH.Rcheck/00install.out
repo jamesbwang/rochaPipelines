@@ -1,0 +1,18 @@
+* installing *source* package ‘CaTCH’ ...
+** using staged installation
+** libs
+/usr/local/GCC/7.3.0/bin/gcc -I"/usr/local/apps/R/3.6/3.6.0/lib64/R/include" -DNDEBUG  -I/usr/local/GSL/gcc-7.2.0/2.4/include   -I/usr/local/include  -fpic  -g -O2  -c CaTCH.c -o CaTCH.o
+/usr/local/GCC/7.3.0/bin/gcc -I"/usr/local/apps/R/3.6/3.6.0/lib64/R/include" -DNDEBUG  -I/usr/local/GSL/gcc-7.2.0/2.4/include   -I/usr/local/include  -fpic  -g -O2  -c R_init_CaTCH.c -o R_init_CaTCH.o
+/usr/local/GCC/7.3.0/bin/gcc -shared -L/usr/local/apps/R/3.6/3.6.0/lib64/R/lib -Wl,-rpath=/usr/local/apps/R/3.6/3.6.0/lib64/R/lib -o CaTCH.so CaTCH.o R_init_CaTCH.o -L/usr/local/GSL/gcc-7.2.0/2.4/lib -lgsl -lgslcblas -lm -L/usr/local/apps/R/3.6/3.6.0/lib64/R/lib -lR
+installing to /gpfs/gsfs9/users/GSRunit/James/HiC_Pipelines/TADCalling_CaTCH/CaTCH.Rcheck/00LOCK-CaTCH/00new/CaTCH/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (CaTCH)

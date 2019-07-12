@@ -4,9 +4,11 @@ chromSizes=$2
 nChromes=$3
 binSizes=$4
 absFile="${hicFile}.abs.bed"
+upperBound="$5"
 
-mkdir temp
-mkdir data/CaTCH
+mkdir $hicFile"_temp"
+mkdir $hicFile"_CaTCH"
+
 
 chmod u+x hicpro2catch.sh
 chmod u+x RemapAllMatrices
@@ -15,35 +17,42 @@ chmod u+x RemapAllMatrices
 for i in $(seq 1 $nChromes);
 do
 		echo Constructing interaction matrices for chromosome $i...
-		java -jar juicer_tools_1.11.09_jcuda.0.8.jar dump observed KR  $hicFile $i $i BP 5000 ./temp/$i.$i.matrix
+		java -jar juicer_tools_1.11.09_jcuda.0.8.jar dump observed KR  $hicFile $i $i BP 5000 $hicFile"_temp"/$i.$i.matrix
 done
 
 python3 Create_Abs_Bed.py $hicFile $chromSizes $binSizes
-./RemapAllMatrices $absFile
+./RemapAllMatrices $absFile $hicFile
 
-for filename in ./temp/*.sorted.matrix; do
+for filename in $hicFile"_temp"/*.sorted.matrix; do
 	echo Reformatting $filename for insulation score algorithm ...
 	./hicpro2catch.sh -i $filename -b $binSizes -f $absFile
 done
 
-mv *.CaTCH ./data/CaTCH
+cp *.CaTCH $hicFile"_CaTCH"
 
-for filename in ./data/CaTCH/*.CaTCH; do
+for filename in $hicFile"_CaTCH"/*.CaTCH; do
 	echo Running Recipricol Insulation Score Algorithm for $filename ...
+	touch "${filename}.nClusters"
+	touch "${filename}.clusters"
 	Rscript CallCaTCH.R $filename "${filename}.nClusters" "${filename}.clusters"
 done
-#Rscript CallCaTCH.R ./data/CaTCH/chr8.CaTCH ./data/CaTCH/chr8.CaTCH.nClusters ./data/CaTCH/chr8.CaTCH.clusters
-mv *.nClusters ./data/CaTCH
-mv *.clusters ./data/CaTCH
 
-for filename in ./data/CaTCH/*.clusters; do
+cat $hicFile"_CaTCH"/*.clusters > $hicFile"_CaTCH"/allClusters.clusters
+Rscript CallCaTCH.R ./data/CaTCH/chr8.CaTCH ./data/CaTCH/chr8.CaTCH.nClusters ./data/CaTCH/chr8.CaTCH.clusters
+
+for filename in $hicFile"_CaTCH"/*.clusters; do
 	echo Converting $filename to .bed file...
-	python3 InsulationsToBed.py $filename $chromSizes $binSizes
+	python3 InsulationsToBed.py $filename $chromSizes $binSizes $upperBound
 done
 
 echo Aggregating and sorting matrix...
-cat ./data/CaTCH/*.bed > "${hicFile}.bed"
+cat $hicFile"_CaTCH"/*.bed > "${hicFile}.bed"
 bedtools sort -i "${hicFile}.bed" > "${hicFile}.sorted.bed"
 
-echo $Converting to .Bedpe file...
+echo Converting to .Bedpe file...
 python3 BedToBedpe.py "${hicFile}.sorted.bed"
+
+echo Generating TAD Quality graphs...
+hicdir=dirname $hicFile
+mkdir $hicdir/results/
+./TADQualityAnalysis $hicFile $hicdir/results/
