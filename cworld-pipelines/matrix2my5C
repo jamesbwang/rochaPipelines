@@ -11,5 +11,5 @@ done
 
 for filename in $matrixDirectory/*.my5c; do
         echo calculating insulation for $filename ....
-	perl /data/GSRunit/James/conda-env/cworld-dekker/scripts/perl/matrix2insulation.pl -i $filename
+	perl matrix2insulation.pl -i $filename
 done
