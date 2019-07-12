@@ -88,7 +88,7 @@ Given that all ```interactions.txt``` files are in the same working directory as
 - [ ] alphanumeric sorting/compatibility with [HiGlass](https://higlass.io) visualization 
 
 
-## current scripts:
+## current scripts in HiGlass_scripts:
 ### 1. script to reverse non-TAD boundaries to TAD boundaries
 Named boundsToTADS.py, this script converts tab-separated files for non-TAD boundaries to TAD .bed files. Usage is as follows:
 ```
