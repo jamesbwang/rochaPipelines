@@ -47,7 +47,7 @@ df = pd.read_csv(matr_tsv, sep="\t", names=["start", "end", "score"], index_col=
 
 
 for i in df.itertuples():
-    matr[int([1]/binSize), int(i[2]/binSize)] = i[3]
+    matr[int(i[1]/binSize), int(i[2]/binSize)] = i[3]
     matr[int(i[2]/binSize), int(i[1]/binSize)] = i[3]
 
 
