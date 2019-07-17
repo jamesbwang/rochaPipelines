@@ -7,9 +7,8 @@
 import sys
 import pandas as pd
 path = sys.argv[1]
-sizes = sys.argv[2]
+sizes = str(sys.argv[2])
 binSize= int(sys.argv[3])
-upperBound = float(sys.argv[4])
 
 # In[2]:
 
@@ -19,25 +18,13 @@ sizes = pd.read_csv(sizes, sep="\t", names=["chr", "size"])
 
 
 # In[3]:
-
-
-insulations = insulations[(insulations["RI"] >=.700) & (insulations["RI"] <= upperBound)]
-
-
-# In[4]:
-
-
 insulations["start"] = insulations["start"].multiply(binSize)
 insulations["end"] = insulations["end"].multiply(binSize)
 
 
-# In[ ]:
+insulations = insulations[(insulations["RI"] >=.77) & (insulations["RI"] <= .82) & (insulations["end"] - insulations["start"] >= 15000)]
 
 
-
-
-
-# In[5]:
 
 
 chrom = insulations.iloc[0,0]
@@ -53,7 +40,9 @@ insulations["end"] = insulations["end"].apply(lambda x: size if size < x else x)
 # In[7]:
 
 
+#insulations.sort_values(by=["chr", "start", "end"]).drop_duplicates(subset=["chr", "start", "end"],keep="first").to_csv(path + ".bed", sep="\t", header=False, index=False, columns=["chr", "start", "end", "insulation"])
 insulations.sort_values(by=["chr", "start", "end"]).drop_duplicates(subset=["chr", "start", "end"],keep="first").to_csv(path + ".bed", sep="\t", header=False, index=False, columns=["chr", "start", "end"])
+
 
 
 

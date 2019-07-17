@@ -12,3 +12,8 @@ random/
 *.my5c
 *.e
 *.o
+*.log
+*.pdf
+*.png
+*.swarm
+

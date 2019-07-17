@@ -31,8 +31,7 @@ chrom = os.path.basename(matr_tsv).split(".")[0]
 # In[4]:
 
 index = pd.read_csv(absbed, sep="\t", names=["chrom", "start", "end", "binno"], index_col=False, usecols=["chrom", "start", "binno"])
-index = index[index["chrom"] == "chr" + str(chrom)]
-index["\t"] = "bin" + index["binno"].astype(str) + "|" + sizes.split(".")[0] + "|" + "chr" + str(chrom) + ":" + (index["start"]+1).astype(str) + "-" + (index["start"].astype(int)+binSize).astype(str)
+index["\t"] = "bin" + index["binno"].astype(str) + "|" + sizes.split(".")[0] + "|" + index["chrom"]  + ":" + (index["start"]+1).astype(str) + "-" + (index["start"].astype(int)+binSize).astype(str)
 matr = np.zeros((index.shape[0],index.shape[0]))
 
 
