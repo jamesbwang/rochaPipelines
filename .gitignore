@@ -16,4 +16,6 @@ random/
 *.pdf
 *.png
 *.swarm
-
+*.clusters
+*.nClusters
+*.cluster
