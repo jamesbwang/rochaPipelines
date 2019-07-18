@@ -23,9 +23,12 @@ done
 python3 Create_Abs_Bed.py $hicFile $chromSizes $binSizes
 ./RemapAllMatrices $absFile $hicFile
 
+
+mv hicpro2catch.sh $hicFile"_CaTCH"
+
 for filename in $hicFile"_temp"/*.sorted.matrix; do
 	echo Reformatting $filename for insulation score algorithm ...
-#	./hicpro2catch.sh -i $filename -b $binSizes -f $absFile
+	./$hicFile"_CaTCH"/hicpro2catch.sh -i $filename -b $binSizes -f $absFile
 done
 
 #cp *.CaTCH $hicFile"_CaTCH"

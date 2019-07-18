@@ -19,3 +19,4 @@ random/
 *.clusters
 *.nClusters
 *.cluster
+CTCF_Calling/

@@ -1,1 +1,1 @@
-./matrix2my5C data/5000/ hg19.chrom.sizes data/inter.hic.abs.bed 5000
+./matrix2my5C data/5000/ data/hg19.chrom.sizes data/inter.hic.abs.bed 5000 

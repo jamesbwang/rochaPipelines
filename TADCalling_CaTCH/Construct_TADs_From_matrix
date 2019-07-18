@@ -4,6 +4,8 @@ absFile=$2
 binSize=$4
 chromSizes=$3
 
+absFile=$(realpath $absFile)
+hicDir=$(realpath $hicDir)
 mkdir $hicDir"_CaTCH"
 
 echo $hicDir
@@ -14,19 +16,27 @@ echo $binSize
 chmod u+x hicpro2catch.sh
 chmod u+x RemapAllMatrices
 
+xpwd=$(pwd)
 
-for filename in $hicDir*.txt; do
+cp hicpro2catch.sh $hicDir"_CaTCH"
+
+cd $hicDir"_CaTCH"
+
+for filename in $hicDir/*.txt; do
 	echo Reformatting $filename for insulation score algorithm ...
-#	./hicpro2catch.sh -i $filename -b $binSize -f $absFile
+	./hicpro2catch.sh -i $filename -b $binSize -f $absFile
 done
 
-#mv *.CaTCH $hicDir"_CaTCH"
+rm $hicDir"_CaTCH"/hicpro2catch.sh
+cd $xpwd
+
+mv *.CaTCH $hicDir"_CaTCH"
 
 for filename in $hicDir"_CaTCH"/*.CaTCH; do
 	echo Running Recipricol Insulation Score Algorithm for $filename ...
-	touch "${filename}.nClusters"
-	touch "${filename}.clusters"
-#	Rscript CallCaTCH.R $filename "${filename}.nClusters" "${filename}.clusters"
+	touch $filename.nClusters
+	touch $filename.clusters
+	Rscript CallCaTCH.R $filename filename.nClusters filename.clusters
 done
 
 for filename in $hicDir"_CaTCH"/*.clusters; do
@@ -44,4 +54,4 @@ python3 BedToBedpe.py "${hicDir}/bedfile.sorted.bed"
 cat $hicDir"_CaTCH"/*.clusters > $hicDir"_CaTCH"/allClusters.cluster
 echo Generating TAD Quality graphs...
 mkdir $hicDir/results/
-./TADQualityAnalysis $hicDir"_CaTCH"/allClusters.cluster $hicDir"bedfile.sorted.bedpe" $hicDir/results/
+./TADQualityAnalysis $hicDir"_CaTCH"/allClusters.cluster $hicDir/"bedfile.sorted.bedpe" $hicDir/results/
