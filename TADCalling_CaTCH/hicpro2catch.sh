@@ -131,8 +131,8 @@ awk 'BEGIN{fn=0; nchr=0}{
 		for(i=0;i<nchr;i++){
 			if($1>=start[i] && $1<=end[i] && $2>=start[i] && $2<=end[i]){
 				#reconvert to zero based bins
-			print chr[i],$1-start[i],$2-start[i],$3 > chr[i]".CaTCH" 
-			print chr[i],$2-start[i],$1-start[i],$3 > chr[i]".CaTCH"
+				print chr[i],$1-start[i],$2-start[i],$3 > chr[i]".CaTCH" 
+				print chr[i],$2-start[i],$1-start[i],$3 > chr[i]".CaTCH" 
 			}
 		}
 	}

@@ -31,28 +31,28 @@ for filename in $hicFile"_temp"/*.sorted.matrix; do
 	./$hicFile"_CaTCH"/hicpro2catch.sh -i $filename -b $binSizes -f $absFile
 done
 
-#cp *.CaTCH $hicFile"_CaTCH"
+cp *.CaTCH $hicFile"_CaTCH"
 
 for filename in $hicFile"_CaTCH"/*.CaTCH; do
 	echo Running Recipricol Insulation Score Algorithm for $filename ...
 	touch "${filename}.nClusters"
 	touch "${filename}.clusters"
-#	Rscript CallCaTCH.R $filename "${filename}.nClusters" "${filename}.clusters"
+	Rscript CallCaTCH.R $filename "${filename}.nClusters" "${filename}.clusters"
 done
 
 
 
 for filename in $hicFile"_CaTCH"/*.clusters; do
 	echo Converting $filename to .bed file...
-#	python3 InsulationsToBed.py $filename $chromSizes $binSizes
+	python3 InsulationsToBed.py $filename $chromSizes $binSizes
 done
 
 echo Aggregating and sorting matrix...
-#cat $hicFile"_CaTCH"/*.bed > "${hicFile}.bed"
-#bedtools sort -i "${hicFile}.bed" > "${hicFile}.sorted.bed"
+cat $hicFile"_CaTCH"/*.bed > "${hicFile}.bed"
+bedtools sort -i "${hicFile}.bed" > "${hicFile}.sorted.bed"
 
 echo Converting to .Bedpe file...
-#python3 BedToBedpe.py "${hicFile}.sorted.bed"
+python3 BedToBedpe.py "${hicFile}.sorted.bed"
 
 cat $hicFile"_CaTCH"/*.clusters > $hicFile"_CaTCH"/allClusters.cluster
 echo Generating TAD Quality graphs...

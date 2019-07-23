@@ -18,18 +18,21 @@ xpwd=$(pwd)
 
 cp matrix2insulation.pl $matrixDirectory
 cd $matrixDirectory
+rm file.swarm
 for filename in $matrixDirectory/*.my5c; do
         echo calculating insulation for $filename ....
-	perl matrix2insulation.pl -i $filename
+	echo perl matrix2insulation.pl -v -i $filename >> $matrixDirectory/file.swarm
 done
 
+
+swarm -g 200 -t 50 --module bedtools,R --time 72:00:00 --merge-output -f $matrixDirectory/file.swarm
 cd $xpwd
 
 
-echo Aggregating and sorting matrix...
-cat *.bed > $matrixDirectory/aggregated.bed
-python3 BoundsToTADS.py $matrixDirectory/aggregated.bed $sizes
-bedtools sort -i $absFile_reversed.bed > $absFile.sorted.bed
+#echo Aggregating and sorting matrix...
+#cat $matrixDirectory/*.bed > $matrixDirectory/dekkerTADs.bed
+#python3 BoundsToTADS.py $matrixDirectory/dekkerTADs.bed $sizes
+#bedtools sort -i $matrixDirectory/dekkerTADs_reversed.bed > $matrixDirectory/dekkerTADs.sorted.bed
 
-echo Converting to .Bedpe file...
-python3 BedToBedpe.py $absFile.sorted.bed
+#echo Converting to .Bedpe file...
+#python3 BedToBedpe.py $matrixDirectory/dekkerTADs.sorted.bed

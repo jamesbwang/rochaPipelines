@@ -41,7 +41,6 @@ minVals = minVals.T.to_dict()
 for i in maxVals:
     chrDf = mergedDf[(mergedDf["bin1"] >= minVals[i]["binno"]) & (mergedDf["bin1"] <= maxVals[i]["binno"]) & (mergedDf["bin2"] >= minVals[i]["binno"]) & (mergedDf["bin2"] <= maxVals[i]["binno"])]
     chrDf.to_csv(os.path.join(dir_path,i + '.matrix'), sep="\t", header=False, index=False)
-    mergedDf = mergedDf - chrDf	
 
 # In[8]:
 

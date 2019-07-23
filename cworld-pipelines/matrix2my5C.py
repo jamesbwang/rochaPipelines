@@ -27,12 +27,13 @@ with open(sizes, 'r') as f:
     reader = csv.reader(f, delimiter='\t')
     chromsizes = {r[0]: r[1] for r in reader} 
 chrom = os.path.basename(matr_tsv).split(".")[0]
-
+print(chrom)
 # In[4]:
 
 index = pd.read_csv(absbed, sep="\t", names=["chrom", "start", "end", "binno"], index_col=False, usecols=["chrom", "start", "binno"])
-index = index[index["chrom"] == "chr" + str(chrom)]
-index["\t"] = "bin" + index["binno"].astype(str) + "|" + sizes.split(".")[0] + "|" + "chr" + str(chrom) + ":" + (index["start"]+1).astype(str) + "-" + (index["start"].astype(int)+binSize).astype(str)
+index = index[index["chrom"] == str(chrom)]
+binStart = index.iloc[0, 2]
+index["\t"] = "bin" + index["binno"].astype(str) + "|" + sizes.split(".")[0] + "|"  + str(chrom) + ":" + (index["start"]+1).astype(str) + "-" + (index["start"].astype(int)+binSize).astype(str)
 matr = np.zeros((index.shape[0],index.shape[0]))
 
 
@@ -46,8 +47,8 @@ df = pd.read_csv(matr_tsv, sep="\t", names=["start", "end", "score"], index_col=
 
 
 for i in df.itertuples():
-    matr[int(i[1]/binSize), int(i[2]/binSize)] = i[3]
-    matr[int(i[2]/binSize), int(i[1]/binSize)] = i[3]
+    matr[int(i[1]-binStart), int(i[2]-binStart)] = i[3]
+    matr[int(i[2]-binStart), int(i[1])-binStart] = i[3]
 
 
 df = pd.DataFrame(data=matr, index=index["\t"], columns=index["\t"])

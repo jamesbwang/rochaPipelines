@@ -15,7 +15,7 @@ binSize= int(sys.argv[3])
 
 insulations = pd.read_csv(path, sep="\t", names=["chr", "RI", "start", "end", "insulation"])
 sizes = pd.read_csv(sizes, sep="\t", names=["chr", "size"])
-
+sizes = sizes.set_index("chr")
 
 # In[3]:
 insulations["start"] = insulations["start"].multiply(binSize)
@@ -25,10 +25,9 @@ insulations["end"] = insulations["end"].multiply(binSize)
 insulations = insulations[(insulations["RI"] >=.77) & (insulations["RI"] <= .82) & (insulations["end"] - insulations["start"] >= 15000)]
 
 
-
-
 chrom = insulations.iloc[0,0]
-size = int(sizes[sizes["chr"] == chrom]["size"].astype(int))
+print("chrom: " + str(chrom))
+size = int(sizes.loc[chrom, "size"])
 
 
 # In[6]:

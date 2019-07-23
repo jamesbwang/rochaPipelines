@@ -6,52 +6,46 @@ chromSizes=$3
 
 absFile=$(realpath $absFile)
 hicDir=$(realpath $hicDir)
-mkdir $hicDir"_CaTCH"
-
-echo $hicDir
-echo $absFile
-echo $chromSizes
-echo $binSize
+mkdir $hicDir/"_CaTCH"
 
 chmod u+x hicpro2catch.sh
 chmod u+x RemapAllMatrices
 
 xpwd=$(pwd)
 
-cp hicpro2catch.sh $hicDir"_CaTCH"
+cp hicpro2catch.sh $hicDir/"_CaTCH"
 
-cd $hicDir"_CaTCH"
+cd $hicDir/"_CaTCH"
 
 for filename in $hicDir/*.txt; do
 	echo Reformatting $filename for insulation score algorithm ...
-	./hicpro2catch.sh -i $filename -b $binSize -f $absFile
+#	./hicpro2catch.sh -i $filename -b $binSize -f $absFile
 done
 
-rm $hicDir"_CaTCH"/hicpro2catch.sh
+rm $hicDir/"_CaTCH"/hicpro2catch.sh
 cd $xpwd
 
-mv *.CaTCH $hicDir"_CaTCH"
 
-for filename in $hicDir"_CaTCH"/*.CaTCH; do
+
+
+for filename in $hicDir/"_CaTCH"/*.CaTCH; do
 	echo Running Recipricol Insulation Score Algorithm for $filename ...
-	touch $filename.nClusters
-	touch $filename.clusters
-	Rscript CallCaTCH.R $filename filename.nClusters filename.clusters
+	#Rscript CallCaTCH.R $filename $filename.nClusters $filename.clusters
 done
 
-for filename in $hicDir"_CaTCH"/*.clusters; do
+for filename in $hicDir/"_CaTCH"/*.clusters; do
 	echo Converting $filename to .bed file...
 	python3 InsulationsToBed.py $filename $chromSizes $binSize
 done
 
 echo Aggregating and sorting matrix...
-cat $hicDir"_CaTCH"/*.bed > "${hicDir}/bedfile.bed"
-bedtools sort -i "${hicDir}/bedfile.bed" > "${hicDir}/bedfile.sorted.bed"
+cat $hicDir/"_CaTCH"/*.bed > "${hicDir}/CaTCHCalledTADs.bed"
+bedtools sort -i "${hicDir}/CaTCHCalledTADs.bed" > "${hicDir}/CaTCHCalledTADs.sorted.bed"
 
 echo Converting to .Bedpe file...
-python3 BedToBedpe.py "${hicDir}/bedfile.sorted.bed"
+python3 BedToBedpe.py "${hicDir}/CaTCHCalledTADs.sorted.bed"
 
-cat $hicDir"_CaTCH"/*.clusters > $hicDir"_CaTCH"/allClusters.cluster
+cat $hicDir/"_CaTCH"/*.clusters > $hicDir/"_CaTCH"/allClusters.cluster
 echo Generating TAD Quality graphs...
 mkdir $hicDir/results/
-./TADQualityAnalysis $hicDir"_CaTCH"/allClusters.cluster $hicDir/"bedfile.sorted.bedpe" $hicDir/results/
+./TADQualityAnalysis $hicDir/"_CaTCH"/allClusters.cluster $hicDir/"CaTCHCalledTADs.sorted.bedpe" $hicDir/results/
