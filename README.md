@@ -1,5 +1,5 @@
 # rochaPipelines
-Backup repository for Lab Rocha's Pipelines, will make public once relevant data is removed and such
+Backup repository for Lab Rocha's Pipelines, will make public once relevant data is removed.
 
 ## Pipelines:
 
